@@ -1,9 +1,9 @@
-import { GalleryItemStyled, ImageGalleryItem } from './ImageGalleryItem.styled';
+import { GalleryItemStyled, ImageItem } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = () => {
-  return (
-    <GalleryItemStyled>
-      <ImageGalleryItem src="" alt="" />
+export const ImageGalleryItem = ({ images }) => {
+  return images.map(({ id, webformatURL, tags }) => (
+    <GalleryItemStyled key={id}>
+      <ImageItem src={webformatURL} alt={tags} />
     </GalleryItemStyled>
-  );
+  ));
 };
