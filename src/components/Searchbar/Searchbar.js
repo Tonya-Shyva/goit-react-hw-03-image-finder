@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 
+// бібліотека для повідомлень  $npm install --save react-toastify------------
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// --------------------------------------------
+
 import { IconButton } from 'components/Button/IconButton';
 import {
   SearchBarHeader,
@@ -16,13 +21,18 @@ class SearchBar extends Component {
 
   handleValueChange = event => {
     this.setState({
-      searchValue: event.currentTarget.value.trim(),
+      searchValue: event.currentTarget.value.toLowercase(),
     });
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
+    if (this.state.searchValue.trim() === '') {
+      // alert('Enter search value');
+      toast.error('Please, enter search value!');
+      return;
+    }
     this.props.onFormSubmit(this.state.searchValue);
     this.setState({ searchValue: '' });
   };

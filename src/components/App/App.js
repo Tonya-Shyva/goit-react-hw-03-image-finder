@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 import Modal from 'components/Modal/Modal';
@@ -65,6 +66,7 @@ export class App extends Component {
             <img src="" alt="" />
           </Modal>
         )}
+        <ToastContainer autoClose={2000} position="top-left" theme="dark" />
       </AppContainer>
     );
   }
