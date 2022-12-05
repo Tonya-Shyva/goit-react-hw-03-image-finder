@@ -17,11 +17,12 @@ import { ReactComponent as SearchIcon } from '../icons/search.svg';
 class SearchBar extends Component {
   state = {
     searchValue: '',
+    pageNumber: 1,
   };
 
   handleValueChange = event => {
     this.setState({
-      searchValue: event.currentTarget.value.toLowercase(),
+      searchValue: event.currentTarget.value,
     });
   };
 
