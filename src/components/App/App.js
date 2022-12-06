@@ -26,6 +26,10 @@ export class App extends Component {
     modalImgAlt: '',
   };
 
+  componentDidMount() {
+    this.setState({ isLoading: false });
+  }
+
   handleSubmit = async e => {
     console.log(e);
     this.setState({ isLoading: true, images: [] });
@@ -75,7 +79,7 @@ export class App extends Component {
       <AppContainer>
         <SearchBar onFormSubmit={this.handleSubmit}></SearchBar>
 
-        {images.length !== [] ? (
+        {images !== [] ? (
           <React.Fragment>
             {isLoading && <Loader />}
             <ImageGallery
@@ -86,14 +90,7 @@ export class App extends Component {
               <Button onClick={this.handleLoadMore} />
             )}
           </React.Fragment>
-        ) : (
-          <img
-            src="https://cdn.boldomatic.com/content/post/5F1KHw/Let-the-search-begin?size=800"
-            alt="let's begining"
-            height={300}
-            width={300}
-          />
-        )}
+        ) : null}
 
         {selectedImg && (
           <Modal onClose={this.closeModal}>
