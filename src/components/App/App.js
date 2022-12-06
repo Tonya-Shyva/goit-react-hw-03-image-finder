@@ -78,15 +78,13 @@ export class App extends Component {
         {images.length !== [] ? (
           <React.Fragment>
             {isLoading && <Loader />}
-            <React.Fragment>
-              <ImageGallery
-                images={images}
-                onSelect={this.selectImg}
-              ></ImageGallery>
-              {images.length < 12 ? null : (
-                <Button onClick={this.handleLoadMore} />
-              )}
-            </React.Fragment>
+            <ImageGallery
+              images={images}
+              onSelect={this.selectImg}
+            ></ImageGallery>
+            {images.length < 12 ? null : (
+              <Button onClick={this.handleLoadMore} />
+            )}
             }
           </React.Fragment>
         ) : (
