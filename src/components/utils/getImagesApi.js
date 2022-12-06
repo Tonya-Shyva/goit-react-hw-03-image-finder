@@ -15,10 +15,9 @@ export async function getImagesApi(searchValue, pageNumber) {
         }
         new Error(response.status);
       }
-      return await response.data.hits;
+      return await response.data;
     })
     .catch(error => {
       console.error(error);
     });
-  // return response.data.hits;
 }

@@ -24,11 +24,8 @@ export class App extends Component {
     isLoading: false,
     selectedImg: null,
     modalImgAlt: '',
+    hide: true,
   };
-
-  componentDidMount() {
-    this.setState({ isLoading: false });
-  }
 
   handleSubmit = async e => {
     console.log(e);
@@ -38,28 +35,48 @@ export class App extends Component {
     }
     const response = await getImagesApi(e, 1);
     console.log(response);
-    if (response.length === 0) {
+    if (response.hits.length === 0) {
       toast.info('Please, enter another search value!');
+      return this.setState({ hide: true, isLoading: false });
+    } else {
+      this.setState({
+        images: response.hits,
+        isLoading: false,
+        searchValue: e,
+        pageNumber: 1,
+        hide: false,
+      });
+      if (response.hits.length < 12) {
+        return this.setState({ hide: true });
+      }
     }
+
     this.setState({
-      images: response,
+      images: response.hits,
       isLoading: false,
       searchValue: e,
       pageNumber: 1,
+      hide: false,
     });
   };
 
   handleLoadMore = async () => {
+    const { searchValue, pageNumber, images } = this.state;
+
     this.setState({ isLoading: true });
-    const response = await getImagesApi(
-      this.state.searchValue,
-      this.state.pageNumber + 1
-    );
+    const response = await getImagesApi(searchValue, pageNumber + 1);
+    // const pages = Math.ceil(Number(response.totalHits / response.hits.length));
+    // console.log(pages);
+
     this.setState({
-      images: [...this.state.images, ...response],
-      pageNumber: this.state.pageNumber + 1,
+      images: [...images, ...response.hits],
+      pageNumber: pageNumber + 1,
       isLoading: false,
     });
+
+    if (images.length === response.totalHits) {
+      this.setState({ hide: true });
+    }
   };
 
   selectImg = (imgUrl, altTag) => {
@@ -74,21 +91,19 @@ export class App extends Component {
   };
 
   render() {
-    const { images, selectedImg, modalImgAlt, isLoading } = this.state;
+    const { images, selectedImg, modalImgAlt, isLoading, hide } = this.state;
     return (
       <AppContainer>
         <SearchBar onFormSubmit={this.handleSubmit}></SearchBar>
 
         {images !== [] ? (
           <React.Fragment>
-            {isLoading && <Loader />}
             <ImageGallery
               images={images}
               onSelect={this.selectImg}
             ></ImageGallery>
-            {images.length < 12 ? null : (
-              <Button onClick={this.handleLoadMore} />
-            )}
+            {isLoading && <Loader />}
+            {!hide && <Button onClick={this.handleLoadMore} />}
           </React.Fragment>
         ) : null}
 
