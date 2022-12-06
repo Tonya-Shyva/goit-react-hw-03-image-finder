@@ -34,6 +34,7 @@ class SearchBar extends Component {
       toast.error('Please, enter search value!');
       return;
     }
+
     this.props.onFormSubmit(this.state.searchValue);
     this.setState({ searchValue: '' });
   };

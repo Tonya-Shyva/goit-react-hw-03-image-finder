@@ -5,7 +5,7 @@ export const ImageGalleryItem = ({ image, onSelect }) => {
     <ImageItem
       src={image.webformatURL}
       alt={image.tags}
-      onClick={() => onSelect(image.largeImageURL, image.tag)}
+      onClick={() => onSelect(image.largeImageURL, image.tags)}
     />
   );
 };

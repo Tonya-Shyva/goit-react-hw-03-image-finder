@@ -1,4 +1,5 @@
-// import PropTypes from 'prop-types';
+// import { MagnifyingGlass } from 'react-loader-spinner';
+import PropTypes from 'prop-types';
 import { ButtonStyled } from './Button.styled';
 
 export const Button = ({ onClick }) => (
@@ -8,6 +9,6 @@ export const Button = ({ onClick }) => (
     </ButtonStyled>
   </div>
 );
-// Button.propTypes = {
-//   onClick: PropTypes.func.isRequired,
-// };
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
