@@ -85,7 +85,6 @@ export class App extends Component {
             {images.length < 12 ? null : (
               <Button onClick={this.handleLoadMore} />
             )}
-            }
           </React.Fragment>
         ) : (
           <img
