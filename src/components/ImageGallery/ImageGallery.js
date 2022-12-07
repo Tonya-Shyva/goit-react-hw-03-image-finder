@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { GalleryItemStyled } from 'components/ImageGalleryItem/ImageGalleryItem.styled';
 import { ImageGalleryList } from './ImageGallery.styled';
@@ -15,6 +15,11 @@ export default function ImageGallery({ images, onSelect }) {
   );
 }
 
-// ImageGallery.propTypes = {
-//   children: PropTypes.array,
-// };
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  onSelect: PropTypes.func.isRequired,
+};

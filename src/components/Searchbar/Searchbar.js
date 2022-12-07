@@ -17,7 +17,6 @@ import { ReactComponent as SearchIcon } from '../icons/search.svg';
 class SearchBar extends Component {
   state = {
     searchValue: '',
-    pageNumber: 1,
   };
 
   handleValueChange = event => {
@@ -30,7 +29,7 @@ class SearchBar extends Component {
     event.preventDefault();
 
     if (this.state.searchValue.trim() === '') {
-      // alert('Enter search value');
+      // alert('Please, enter search value!');
       toast.error('Please, enter search value!');
       return;
     }
@@ -65,5 +64,5 @@ class SearchBar extends Component {
 export default SearchBar;
 
 SearchBar.propTypes = {
-  onFormSubmit: PropTypes.func,
+  onFormSubmit: PropTypes.func.isRequired,
 };

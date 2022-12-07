@@ -6,15 +6,13 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // --------------------------------------------------
+import { getImagesApi } from 'components/utils/getImagesApi';
+import AppContainer from './App.styled';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 import Modal from 'components/Modal/Modal';
 import SearchBar from 'components/Searchbar/Searchbar';
-import AppContainer from './App.styled';
-// import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-
 import Loader from 'components/Loader/Loader';
-import { getImagesApi } from 'components/utils/getImagesApi';
-import { Button } from 'components/Button/Button';
+import Button from 'components/Button/Button';
 
 export class App extends Component {
   state = {
@@ -28,13 +26,13 @@ export class App extends Component {
   };
 
   handleSubmit = async e => {
-    console.log(e);
-    this.setState({ isLoading: true, images: [] });
+    // console.log(e);
+    this.setState({ isLoading: true, images: [], hide: true, pageNumber: 1 });
     if (e.trim() === '') {
       return;
     }
     const response = await getImagesApi(e, 1);
-    console.log(response);
+    // console.log(response);
     if (response.hits.length === 0) {
       toast.info('Please, enter another search value!');
       return this.setState({ hide: true, isLoading: false });
@@ -42,7 +40,6 @@ export class App extends Component {
       this.setState({
         images: response.hits,
         isLoading: false,
-        searchValue: e,
         pageNumber: 1,
         hide: false,
       });
@@ -65,16 +62,18 @@ export class App extends Component {
 
     this.setState({ isLoading: true });
     const response = await getImagesApi(searchValue, pageNumber + 1);
-    // const pages = Math.ceil(Number(response.totalHits / response.hits.length));
-    // console.log(pages);
 
-    this.setState({
-      images: [...images, ...response.hits],
+    this.setState(prevState => ({
+      images: [...prevState.images, ...response.hits],
       pageNumber: pageNumber + 1,
       isLoading: false,
-    });
+    }));
 
     if (images.length === response.totalHits) {
+      this.setState({ hide: true });
+    }
+
+    if (response.hits.length < 12) {
       this.setState({ hide: true });
     }
   };
